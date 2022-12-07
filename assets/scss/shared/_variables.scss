@@ -1,0 +1,51 @@
+/* Breakpoints: From xs to sm, from sm to md, from md to lg, after that simple desktop */
+$breakpoints: (
+    xs: 0,
+    sm: 768px,
+    md: 1280px,
+    lg: 1440px,
+    xl: 1920px,
+);
+
+/* Colors */
+$base-0: #fff;
+$base-50: #f6f6f6;
+$base-100: #eaeaea;
+$base-200: #d1d2d2;
+$base-250: #e2e2e3;
+$base-300: #a3a4a5;
+$base-400: #757777;
+$base-500: #46494a;
+$base-600: #181c1d;
+$base-700: #131617;
+$base-800: #0f1111;
+$base-900: #0a0b0c;
+$base-950: #2d2d2d;
+$base-1000: #212121;
+
+$black: #000;
+
+$accent: #e47138;
+$accent-light: #e88858;
+$accent-dark: #d26834;
+
+$error: #CB4343;
+
+/* Defaults */
+$font-family: "Montserrat", sans-serif;
+$font-size: 1.4rem;
+$body-color: #0f1111;
+$body-bg: #f6f6f6;
+
+/* Grid */
+$container-width: 1920px;
+$header-h: 8rem;
+$header-mobile-h: 6.4rem;
+
+/* Spacing */
+$side-padding: 2.4rem;
+$side-padding-mobile: 1.6rem;
+
+/* Transitions */
+$default-transition: .3s ease;
+$default-color-transition: .2s ease;

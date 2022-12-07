@@ -1,0 +1,14 @@
+@import '~normalize.css';
+@import './common/reset';
+@import './common/transitions';
+
+.container {
+    max-width: $container-width;
+    margin-right: auto;
+    margin-left: auto;
+    padding: 0 $side-padding;
+
+    @include respond-to(xs) {
+      padding: 0 $side-padding-mobile;
+    }
+}
