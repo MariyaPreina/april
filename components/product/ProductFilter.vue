@@ -1,12 +1,24 @@
 <template>
 		<div :class="$style.ProductFilter">
-        <form :class="$style.form">
+        <form @submit.prevent :class="$style.form">
             <div :class="$style.label">
                 Введите параметры поиска
+                <transition name="fade" mode="out-in">
+                    <VLoader v-if="isLoading" :class="$style.loader"/>
+                </transition>
             </div>
             <div :class="$style.inputWrapper">
-                <VInput/>
-                <VButtonSquare size="small" :class="$style.button">
+                <p :class="$style.count">Найдено продуктов: {{ productsCount }}</p>
+                <VInput
+                    @enter="$emit('change-input', $event)"
+                    @blur="$emit('change-input', $event)"
+                    @input="$emit('on-input', $event)"
+                />
+                <VButtonSquare
+                    type="submit"
+                    size="small"
+                    :class="$style.button"
+                >
                     <IconSearch/>
                 </VButtonSquare>
             </div>
@@ -65,6 +77,7 @@ import VButtonSquare from '~/components/ui/buttons/VButtonSquare';
 import IconSearch from '~/components/icons/IconSearch';
 import IconGrid from '~/components/icons/IconGrid';
 import IconRow from '~/components/icons/IconRow';
+import VLoader from '~/components/ui/loader/VLoader';
 
 		export default {
 				name: 'ProductFilter',
@@ -75,16 +88,25 @@ import IconRow from '~/components/icons/IconRow';
             IconSearch,
             IconGrid,
             IconRow,
+            VLoader,
         },
 
         props: {
 				    activeView: {
 				        type: String,
                 default: 'grid',
+            },
+
+            isLoading: {
+                type: Boolean,
+                default: false,
+            },
+
+            productsCount: {
+				        type: Number,
+                default: 0,
             }
-        }
-
-
+        },
 		}
 </script>
 
@@ -119,7 +141,7 @@ import IconRow from '~/components/icons/IconRow';
         padding: 2.4rem;
 
         @include respond-to(xs) {
-            padding: 1.5rem;
+            padding: 1.5rem 1.5rem 2.4rem;
         }
     }
 
@@ -132,8 +154,22 @@ import IconRow from '~/components/icons/IconRow';
     }
 
     .inputWrapper {
+        position: relative;
         display: flex;
         margin-top: auto;
+    }
+
+    .count {
+        position: absolute;
+        left: 0;
+        top: calc(100% + .2rem);
+        font-size: 1.2rem;
+        color: $base-400;
+    }
+
+    .loader {
+        position: absolute;
+        margin-left: 2rem;
     }
 
     .button {
@@ -141,6 +177,7 @@ import IconRow from '~/components/icons/IconRow';
     }
 
     .label {
+        position: relative;
         height: 6rem;
         font-size: 1.6rem;
         color: $base-500;

@@ -1,14 +1,22 @@
 export const state = () => ({
     items: [],
+    value: '',
 });
 
 export const getters = {
-
+    getFilteredItems(state) {
+        return state.items.filter(data =>
+            JSON.stringify(data).toLowerCase().indexOf(state.value.toLowerCase()) !== -1);
+    }
 };
 
 export const mutations = {
     SET_ITEMS(state, payload) {
         state.items = payload;
+    },
+
+    SET_VALUE(state, payload) {
+        state.value = payload;
     },
 };
 

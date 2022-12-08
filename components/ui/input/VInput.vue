@@ -6,10 +6,9 @@
                :type="type"
                :name="name"
                :maxlength="maxLength"
-               @keydown.enter="onEnter"
-               @input="onInput"
-               @change="onChange"
-               @blur="onBlur">
+               @keydown.enter="$emit('enter', value)"
+               @input="$emit('input', value)"
+               @blur="$emit('blur', value)">
 		</div>
 </template>
 
@@ -39,26 +38,6 @@
 				        value: '',
             };
         },
-
-        methods: {
-				    onEnter() {
-				        //
-            },
-
-				    onInput() {
-				        //
-            },
-
-            onChange() {
-				        //
-            },
-
-            onBlur() {
-				        //
-            }
-        }
-
-
 		}
 </script>
 

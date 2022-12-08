@@ -3,11 +3,25 @@
         <ProductFilter
             :active-view="activeView"
             :class="$style.filters"
+            :is-loading="isLoading"
+            :products-count="cards.length"
+            @change-input="$emit('change-input', $event)"
+            @on-input="$emit('on-input', $event)"
             @change-view="$emit('change-view', $event)"
         />
-
         <transition name="fade" mode="out-in">
-            <div v-if="activeView === 'grid'" :class="$style.grid">
+            <div v-if="!itemsList.length"
+                 :key="'empty'"
+                 :class="$style.emptyText"
+            >
+                <p>По заданным параментрам ничего не найдено.</p>
+                <p>Измените параметры и попробуйте снова.</p>
+            </div>
+
+            <div v-else-if="activeView === 'grid' && itemsList.length"
+                 :key="'grid'"
+                 :class="$style.grid"
+            >
                 <div v-for="card in itemsList"
                      :key="`${card.id}-${card.name}`"
                      :class="$style.gridCard">
@@ -17,10 +31,11 @@
                     />
                 </div>
             </div>
-        </transition>
 
-        <transition name="fade" mode="out-in">
-            <div v-if="activeView === 'row'" :class="$style.row">
+            <div v-else-if="activeView === 'row' && itemsList.length"
+                 :key="'row'"
+                 :class="$style.row"
+            >
                 <div v-for="card in itemsList"
                      :key="`${card.id}-${card.name}`"
                      :class="$style.rowCard">
@@ -32,15 +47,17 @@
             </div>
         </transition>
 
-        <VButtonSquare
-            v-if="hasNext && pagiCount > 0"
-            color="white"
-            :class="$style.btn"
-            size="custom"
-            @click="loadMore"
-        >
-            <span>+ {{ pagiCount }} {{ pagiCount | plural(['продукт', 'продукта', 'продуктов']) }}</span>
-        </VButtonSquare>
+        <transition name="fade-content">
+            <VButtonSquare
+                v-if="hasNext && pagiCount > 0"
+                color="white"
+                :class="$style.btn"
+                size="custom"
+                @click="loadMore"
+            >
+                <span>+ {{ pagiCount }} {{ pagiCount | plural(['продукт', 'продукта', 'продуктов']) }}</span>
+            </VButtonSquare>
+        </transition>
 		</div>
 </template>
 
@@ -71,13 +88,17 @@ import VButtonSquare from '~/components/ui/buttons/VButtonSquare';
                 type: Array,
                 default: () => [],
             },
+
+            isLoading: {
+                type: Boolean,
+                default: false,
+            }
         },
 
         data() {
             return {
                 lastIndex: 6,
                 step: 6,
-                pagiCount: 0,
             };
         },
 
@@ -89,10 +110,10 @@ import VButtonSquare from '~/components/ui/buttons/VButtonSquare';
             hasNext() {
                 return this.lastIndex < this.cards.length;
             },
-        },
 
-        mounted() {
-            this.pagiCount = this.cards.length - this.lastIndex;
+            pagiCount() {
+                return this.cards.length - this.lastIndex;
+            }
         },
 
         methods: {
@@ -155,6 +176,24 @@ import VButtonSquare from '~/components/ui/buttons/VButtonSquare';
 
         @include respond-to(xs) {
             margin-top: 1rem;
+        }
+    }
+
+    .emptyText {
+        padding: 15% 0;
+        text-align: center;
+        font-size: 2rem;
+        line-height: 3rem;
+        color: $base-500;
+
+        @include respond-to(sm) {
+            padding: 20% 0;
+        }
+
+        @include respond-to(xs) {
+            font-size: 1.2rem;
+            line-height: 1.6rem;
+            padding: 30% 0;
         }
     }
 </style>
