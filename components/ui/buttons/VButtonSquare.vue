@@ -7,6 +7,10 @@
                :type="!link && !href ? type : null"
                @click="onClick"
     >
+        <span v-if="$slots.leftAddon"
+              class="v-button__leftAddon">
+            <slot name="leftAddon"></slot>
+        </span>
         <div v-if="label"
              class="v-button-square__label"
              :class="labelPosition"
@@ -32,7 +36,7 @@ export default {
             type: String,
             default: 'medium',
             validator(value) {
-                return ['medium', 'small', 'custom'].indexOf(value) !== -1;
+                return ['medium', 'small', 'xsmall', 'custom'].indexOf(value) !== -1;
             },
         },
 
@@ -284,6 +288,18 @@ export default {
             }
         }
 
+        &--xsmall {
+            width: 3rem;
+            height: 3rem;
+            padding: 1.1rem;
+            border-radius: .4rem;
+
+            svg {
+                width: 1.5rem;
+                height: 1.5rem;
+            }
+        }
+
         &--custom {
             //
         }
@@ -306,6 +322,10 @@ export default {
             &.right {
                 right: 0;
                 left: initial;
+            }
+
+            @include respond-to(md) {
+                display: none;
             }
         }
     }

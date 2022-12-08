@@ -26,12 +26,21 @@
                 type: String,
                 default: '',
             },
+
+            size: {
+                type: String,
+                default: 'medium',
+                validator(value) {
+                    return ['medium', 'small'].indexOf(value) !== -1;
+                },
+            },
         },
 
         computed: {
             classes() {
                 return [
                     `v-tag--${this.color}`,
+                    `v-tag--${this.size}`,
                 ];
             },
         },
@@ -44,14 +53,28 @@
         align-items: center;
         justify-content: center;
         white-space: nowrap;
-        padding: .5rem .8rem;
-        border-radius: .4rem;
-        font-size: 1.1rem;
-        font-weight: 500;
-        line-height: 1.6rem;
 
         /* Colors */
 
+        &--medium {
+            padding: .5rem .8rem;
+            border-radius: .4rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            line-height: 1.6rem;
+        }
+
+        &--small {
+            padding: .3rem .5rem;
+            border-radius: .2rem;
+            font-size: .8rem;
+            font-weight: 500;
+            line-height: .8rem;
+        }
+
+        /* End Colors */
+
+        /* Colors */
         &--primary {
             background-color: $accent;
             color: $base-0;

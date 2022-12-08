@@ -5,22 +5,34 @@
                 :active-view="activeView"
                 @change-view="handleChangeView"
                 :cards="items"
+                @card-click="handleOpenModal"
             />
         </div>
+
+        <transition name="fade">
+            <ProductListModal
+                v-if="isModalOpened"
+                :item="activeCard"
+                @close="handleCloseModal"
+            />
+        </transition>
 		</div>
 </template>
 
 <script>
 import TheHeader from '~/components/layout/TheHeader';
 import ProductList from '~/components/product/ProductList';
+import ProductListModal from '~/components/product/ProductListModal';
 import {mapState, mapActions} from 'vuex';
+import {lockBody, unlockBody} from '~/assets/js/commonUtils';
 
-		export default {
+export default {
 				name: 'HomePage',
 
         components: {
             TheHeader,
             ProductList,
+            ProductListModal,
         },
 
         async asyncData({app}) {
@@ -34,15 +46,13 @@ import {mapState, mapActions} from 'vuex';
         data() {
             return {
                 activeView: 'grid',
+                isModalOpened: false,
+                activeCard: {},
             };
         },
 
         computed: {
             ...mapState(['items']),
-        },
-
-        mounted() {
-            console.log(this.items);
         },
 
         methods: {
@@ -52,6 +62,17 @@ import {mapState, mapActions} from 'vuex';
 
             handleChangeView(val) {
                 this.activeView = val;
+            },
+
+            handleOpenModal(val) {
+                this.activeCard = val;
+                lockBody();
+                this.isModalOpened = true;
+            },
+
+            handleCloseModal() {
+                this.isModalOpened = false;
+                unlockBody();
             }
         }
 

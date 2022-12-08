@@ -16,3 +16,17 @@
 .fade-content-leave-active {
     opacity: 0;
 }
+
+.modal-enter-active {
+    transition: transform .8s, opacity .8s;
+}
+
+.modal-leave-active {
+    transition: transform .4s, opacity .4s;
+}
+
+.modal-enter,
+.modal-leave-to {
+    opacity: 0;
+    transform: translate(0, 80px);
+}

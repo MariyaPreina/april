@@ -13,6 +13,7 @@
                      :class="$style.gridCard">
                     <ProductListCard
                         :card="card"
+                        @card-click="$emit('card-click', $event)"
                     />
                 </div>
             </div>
@@ -25,6 +26,7 @@
                      :class="$style.rowCard">
                     <ProductListRow
                         :card="card"
+                        @card-click="$emit('card-click', $event)"
                     />
                 </div>
             </div>
@@ -146,5 +148,13 @@ import VButtonSquare from '~/components/ui/buttons/VButtonSquare';
         height: 5rem;
         margin-top: 3rem;
         border-radius: .8rem;
+
+        @include respond-to(sm) {
+            margin-top: 2rem;
+        }
+
+        @include respond-to(xs) {
+            margin-top: 1rem;
+        }
     }
 </style>

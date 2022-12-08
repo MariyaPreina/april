@@ -16,8 +16,12 @@
 		.TheHeader {
         display: flex;
         align-items: center;
-				height: 9rem;
+				height: $header-h;
         border-bottom: 1px solid $base-100;
+
+        @include respond-to(xs) {
+            height: $header-mobile-h;
+        }
 		}
 
     .inner {
@@ -28,5 +32,9 @@
         font-size: 4rem;
         font-weight: 600;
         color: $accent;
+
+        @include respond-to(xs) {
+            font-size: 3rem;
+        }
     }
 </style>

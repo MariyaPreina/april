@@ -35,6 +35,27 @@
             </div>
         </div>
 
+        <div :class="$style.mobileViewToggler">
+            <VButtonSquare
+                :color="activeView === 'grid' ? 'primary' : 'grey'"
+                size="custom"
+                :class="$style.viewBtn"
+                @click="$emit('change-view', 'grid')"
+            >
+                <template #leftAddon>Плиткой</template>
+                <IconGrid />
+            </VButtonSquare>
+            <VButtonSquare
+                :color="activeView === 'row' ? 'primary' : 'grey'"
+                size="custom"
+                :class="$style.viewBtn"
+                @click="$emit('change-view', 'row')"
+            >
+                <template #leftAddon>Списком</template>
+                <IconRow />
+            </VButtonSquare>
+        </div>
+
 		</div>
 </template>
 
@@ -73,21 +94,41 @@ import IconRow from '~/components/icons/IconRow';
         justify-content: space-between;
 				background-color: $base-0;
         border-radius: 2rem;
+
+        @include respond-to(xs) {
+            flex-direction: column-reverse;
+        }
 		}
 
     .form {
         display: flex;
         flex-direction: column;
         width: 40%;
+
+        @include respond-to(sm) {
+            width: 50%;
+        }
+
+        @include respond-to(xs) {
+            width: 100%;
+        }
     }
 
     .form,
     .viewToggler {
         padding: 2.4rem;
+
+        @include respond-to(xs) {
+            padding: 1.5rem;
+        }
     }
 
     .viewToggler {
         border-left: 1px solid $base-100;
+
+        @include respond-to(xs) {
+            display: none;
+        }
     }
 
     .inputWrapper {
@@ -103,10 +144,43 @@ import IconRow from '~/components/icons/IconRow';
         height: 6rem;
         font-size: 1.6rem;
         color: $base-500;
+
+        @include respond-to(xs) {
+            height: unset;
+            margin-bottom: 1.5rem;
+            font-size: 1.4rem;
+        }
     }
 
     .buttons {
         display: flex;
         gap: 1rem;
+    }
+
+    .mobileViewToggler {
+        display: none;
+
+        @include respond-to(xs) {
+            display: flex;
+            gap: 1rem;
+            padding: 1.5rem 1.5rem 0;
+        }
+    }
+
+    .viewBtn {
+        flex: 1;
+        height: 4.4rem;
+        padding: 1.1rem;
+        border-radius: .4rem;
+
+        &:global(.v-button-square) {
+            justify-content: space-between;
+        }
+
+        svg {
+            width: 1.8rem;
+            height: 1.8rem;
+            margin-left: 1rem;
+        }
     }
 </style>

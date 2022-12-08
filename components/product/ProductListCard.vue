@@ -1,5 +1,7 @@
 <template>
-		<div :class="$style.ProductListCard">
+		<div :class="$style.ProductListCard"
+         @click="$emit('card-click', card)"
+    >
         <div :class="$style.border"></div>
 
         <div v-if="card.tag_list && card.tag_list.length" :class="$style.tags">
@@ -81,6 +83,10 @@ import VTag from '~/components/ui/tag/VTag';
                 opacity: 1;
             }
         }
+
+        @include respond-to(xs) {
+            padding: 2.5rem 2rem 2rem;
+        }
 		}
 
     .border {
@@ -113,6 +119,13 @@ import VTag from '~/components/ui/tag/VTag';
         margin-right: auto;
         margin-bottom: 3rem;
         margin-left: auto;
+
+        @include respond-to(xs) {
+            width: 22rem;
+            height: 19rem;
+            margin-right: auto;
+            margin-bottom: 2rem;
+        }
     }
 
     .image {
@@ -133,6 +146,12 @@ import VTag from '~/components/ui/tag/VTag';
         font-weight: 500;
         line-height: 2.8rem;
         color: $base-800;
+
+        @include respond-to(xs) {
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            line-height: 2rem;
+        }
     }
 
     .infoItem {
@@ -143,6 +162,14 @@ import VTag from '~/components/ui/tag/VTag';
         &:not(:last-child) {
             padding-bottom: 1.2rem;
             border-bottom: 1px solid $base-100;
+        }
+
+        @include respond-to(xs) {
+            padding-top: .8rem;
+
+            &:not(:last-child) {
+                padding-bottom: .8rem;
+            }
         }
     }
 
@@ -156,11 +183,19 @@ import VTag from '~/components/ui/tag/VTag';
             color: $base-400;
             text-align: left;
         }
+
+        @include respond-to(xs) {
+            font-size: 1.4rem;
+        }
     }
 
     .price {
         margin-top: 2rem;
         font-size: 3.2rem;
         font-weight: 600;
+
+        @include respond-to(xs) {
+            font-size: 2rem;
+        }
     }
 </style>
